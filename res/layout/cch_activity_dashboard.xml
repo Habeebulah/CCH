@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+   <!--  <ScrollView
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView style="?android:textAppearanceMedium"
+        android:padding="16dp"
+        android:lineSpacingMultiplier="1.2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+</ScrollView> -->
+
+	<LinearLayout
+	    android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+        <Button
+	         	android:id="@+id/LearningModule"
+        	    android:layout_width="150dp"
+        	    android:layout_height="wrap_content"        	   
+        	    android:ems="10"
+        	    android:text="Learning Center 2"
+        	   	android:background="#EEB422"
+        	    android:textSize="12sp" 
+        	    android:onClick="onLearnClick"
+        	    android:textColor="#0000FF"/>
+	    <LinearLayout
+	         android:layout_width="match_parent"
+        	android:layout_height="50dp" >
+	       
+	    </LinearLayout>
+	    <Button
+	         	android:id="@+id/EventPlanner"
+        	    android:layout_width="150dp"
+        	    android:layout_height="wrap_content"        	   
+        	    android:ems="10"
+        	    android:text="Event Planner"
+        	   	android:background="#EEB422"
+        	    android:textSize="12sp" 
+        	    android:onClick="onEPClick"
+        	    android:textColor="#0000FF"/>
+	    <LinearLayout
+	         android:layout_width="match_parent"
+        	android:layout_height="50dp" >
+	       
+	    </LinearLayout>
+	        
+	     <Button
+	         	android:id="@+id/POC"
+        	    android:layout_width="150dp"
+        	    android:layout_height="wrap_content"        	   
+        	    android:ems="10"
+        	    android:text="Point Of Care"
+        	   	android:background="#EEB422"
+        	    android:textSize="12sp" 
+        	    android:onClick="onPOCClick"
+        	    android:textColor="#0000FF"/>
+	    
+	</LinearLayout>
+</LinearLayout>

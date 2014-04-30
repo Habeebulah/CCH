@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:id="@+id/laymeout"
+              android:weightSum="1" tools:context=".question_layout">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="149dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Point of Care"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+ <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:text="You can find out more about how to effectively deliver care here. This section will give you tools and tips about counselling for pregnant women, family planning, and post natal care.
+
+Click on a button below to find out more about Point of Care Tools available for each category."
+            android:editable="false"/>
+
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:orientation="vertical" >
+
+     <Button
+         android:id="@+id/ancButton"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="Antenatal Care" />
+
+ </LinearLayout>
+
+ <Button
+     android:id="@+id/familyplanningButton"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:text="Family Planning" />
+
+ <Button
+     android:id="@+id/Button02"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:text="Post Natal Care" />
+
+ <Button
+     android:id="@+id/Button03"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:text="Child Health" />
+
+</LinearLayout>
