@@ -3,16 +3,18 @@ package org.grameenfoundation.cch.activity;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Observable;
+import java.util.Observer;
 
-
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.mobile.learningGF.R;
+import org.digitalcampus.oppia.activity.AboutActivity;
+import org.digitalcampus.oppia.activity.AppActivity;
+import org.digitalcampus.oppia.activity.HelpActivity;
+import org.digitalcampus.oppia.activity.OppiaMobileActivity;
+import org.digitalcampus.oppia.activity.PrefsActivity;
+import org.digitalcampus.oppia.activity.StartUpActivity;
 import org.digitalcampus.oppia.application.DbHelper;
 import org.digitalcampus.oppia.utils.UIUtils;
-import org.digitalcampus.oppia.activity.AppActivity;
-import org.digitalcampus.oppia.activity.StartUpActivity;
-import org.digitalcampus.oppia.activity.PrefsActivity;
-import org.digitalcampus.oppia.activity.AboutActivity;
-import org.digitalcampus.oppia.activity.HelpActivity;
 import org.grameenfoundation.cch.model.WebAppInterface;
 
 import android.annotation.SuppressLint;
@@ -30,30 +32,40 @@ import android.preference.PreferenceManager;
 import android.provider.CalendarContract.Events;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.SearchView;
-
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 
 
+
 @SuppressLint("SetJavaScriptEnabled")
-public class HomeActivity extends AppActivity implements OnSharedPreferenceChangeListener {
-	Intent myIntent;
+public class HomeActivity extends AppActivity implements OnSharedPreferenceChangeListener, Observer{
+
 	public static final String TAG = HomeActivity.class.getSimpleName();
 	private SharedPreferences prefs;
-
+	
+	Intent myIntent;
 	private WebView myWebView;
 
+	// declare updater class member here (or in the Application)
+		@SuppressWarnings("unused")
+		private AutoUpdateApk aua;
 	
+	@SuppressLint("JavascriptInterface")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
+		aua = new AutoUpdateApk(getApplicationContext());	// <-- don't forget to instantiate
+
+		aua.addObserver(this);	// see the remark below, next to update() method
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(this);
 		PreferenceManager.setDefaultValues(this, R.xml.prefs, false);
@@ -73,6 +85,8 @@ public class HomeActivity extends AppActivity implements OnSharedPreferenceChang
 		myWebView = (WebView) findViewById(R.id.webView1);
 		myWebView.getSettings().setJavaScriptEnabled(true);
 		myWebView.addJavascriptInterface(new WebAppInterface(this), "Android");
+		//myWebView.addJavascriptInterface(new JavascriptAccessor(), "javascriptAccessor");
+		
 		myWebView.setWebViewClient(new WebViewClient(){
 				
 				public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -84,42 +98,62 @@ public class HomeActivity extends AppActivity implements OnSharedPreferenceChang
 								i.setComponent(cn);
 								startActivity(i);	 
 								
-						}
+						} 
 						else if(url.equals("file:///android_asset/www/cch/modules/eventplanner/addevent")){
+							//String Location = myWebView.get.getElementById('picker').value;
+							Log.v(TAG, "Launching addcal");
+							  Calendar cal = Calendar.getInstance(); 
+							    myIntent = new Intent(myIntent.ACTION_INSERT);
+							   	myIntent.setType("vnd.android.cursor.item/event");
+							    //myIntent.putExtra("Event type", "CCh" );
+							    
+							    myIntent.putExtra("beginTime", cal.getTimeInMillis());
+							    myIntent.putExtra("allDay", true);	    
+							    myIntent.putExtra("rrule", "FREQ=YEARLY");
+							    myIntent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+							    //myIntent.putExtra("title", pickevent.getSelectedItem().toString());
+							    //myIntent.removeCategory("title");
+							    myIntent.putExtra("description", "Description of your event");
+							    myIntent.putExtra("eventLocation", "Please enter where you are ");
+							    myIntent.putExtra(Events.ACCESS_LEVEL, Events.ACCESS_PRIVATE);
+							    myIntent.putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY);
+							    startActivity(myIntent);	 				
 							
-								Log.v(TAG, "Launching addcal");
-								  Calendar cal = Calendar.getInstance(); 
-								   myIntent = new Intent(myIntent.ACTION_INSERT);
-								   	myIntent.setType("vnd.android.cursor.item/event");
-								    //myIntent.putExtra("Event type", "CCh" );
-								    
-								    myIntent.putExtra("beginTime", cal.getTimeInMillis());
-								    myIntent.putExtra("allDay", true);	    
-								    myIntent.putExtra("rrule", "FREQ=YEARLY");
-								    myIntent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
-								    //myIntent.putExtra("title", pickevent.getSelectedItem().toString());
-								    //myIntent.removeCategory("title");
-								    myIntent.putExtra("description", "Description of your event");
-								    myIntent.putExtra("eventLocation", "Please enter where you are ");
-								    myIntent.putExtra(Events.ACCESS_LEVEL, Events.ACCESS_PRIVATE);
-								    myIntent.putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY);
-								    startActivity(myIntent);	 
-									
-							
+						}
+						else if (url.equals("file:///android_asset/www/cch/Learner")){							
+							Intent intent = new Intent(getApplicationContext(),ModuleLearningActivity.class);
+			                startActivity(intent);							
+			                
 						}
 						else {
 							view.loadUrl(url);
 							return true;
 						}
 						
+						
 						return true;
 				}
 		});
 		
+		
 		String url = "file:///android_asset/www/cch/index.html";
 		myWebView.loadUrl(url);
+		myWebView.loadUrl("javascript: {document.getElementsById(\"picker\")[0].value =;};");
+		
 	}
 
+	
+	
+	
+	@Override
+	public void update(Observable observable, Object data) {
+		if( ((String)data).equalsIgnoreCase(AutoUpdateApk.AUTOUPDATE_GOT_UPDATE) ) {
+			android.util.Log.i("AutoUpdateApkActivity", "Have just received update!");
+		}
+		if( ((String)data).equalsIgnoreCase(AutoUpdateApk.AUTOUPDATE_HAVE_UPDATE) ) {
+			android.util.Log.i("AutoUpdateApkActivity", "There's an update available!");
+		}
+	}
 	@Override
 	public void onStart() {
 		super.onStart();		

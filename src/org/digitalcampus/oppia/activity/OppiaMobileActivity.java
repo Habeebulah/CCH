@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.Callable;
 
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.mobile.learningGF.R;
 import org.digitalcampus.oppia.adapter.CourseListAdapter;
 import org.digitalcampus.oppia.application.DbHelper;
 import org.digitalcampus.oppia.application.MobileLearning;
@@ -35,7 +35,6 @@ import org.digitalcampus.oppia.task.Payload;
 import org.digitalcampus.oppia.task.ScanMediaTask;
 import org.digitalcampus.oppia.utils.FileUtils;
 import org.digitalcampus.oppia.utils.UIUtils;
-
 import org.grameenfoundation.cch.activity.ModuleLearningActivity;
 
 import android.app.AlertDialog;
@@ -48,8 +47,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.KeyEvent;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;

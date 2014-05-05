@@ -19,15 +19,12 @@ package org.digitalcampus.oppia.activity;
 
 import java.util.ArrayList;
 
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.mobile.learningGF.R;
 import org.digitalcampus.oppia.application.MobileLearning;
 import org.digitalcampus.oppia.listener.SubmitListener;
 import org.digitalcampus.oppia.model.User;
 import org.digitalcampus.oppia.task.Payload;
 import org.digitalcampus.oppia.task.RegisterTask;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -40,6 +37,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 public class RegisterActivity extends AppActivity implements SubmitListener {
 

@@ -3,13 +3,13 @@ package org.grameenfoundation.cch.activity;
 
 import java.util.Locale;
 
-import org.digitalcampus.oppia.activity.AppActivity;
-import org.digitalcampus.oppia.activity.StartUpActivity;
-import org.digitalcampus.oppia.activity.PrefsActivity;
+import org.digitalcampus.mobile.learningGF.R;
 import org.digitalcampus.oppia.activity.AboutActivity;
+import org.digitalcampus.oppia.activity.AppActivity;
 import org.digitalcampus.oppia.activity.HelpActivity;
 import org.digitalcampus.oppia.activity.OppiaMobileActivity;
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.oppia.activity.PrefsActivity;
+import org.digitalcampus.oppia.activity.StartUpActivity;
 import org.digitalcampus.oppia.application.DbHelper;
 import org.digitalcampus.oppia.utils.UIUtils;
 
@@ -22,10 +22,8 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-
 import android.view.KeyEvent;
 import android.view.View;
-
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;

@@ -18,7 +18,7 @@ package org.digitalcampus.oppia.utils;
 
 import java.util.Iterator;
 
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.mobile.learningGF.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 

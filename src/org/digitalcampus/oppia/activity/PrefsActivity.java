@@ -21,14 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.mobile.learningGF.R;
 import org.digitalcampus.oppia.model.Lang;
+
+import android.os.Bundle;
+import android.preference.ListPreference;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
-
-import android.os.Bundle;
-import android.preference.ListPreference;;
 
 public class PrefsActivity extends SherlockPreferenceActivity {
 	

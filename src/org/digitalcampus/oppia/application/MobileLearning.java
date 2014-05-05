@@ -19,7 +19,7 @@ package org.digitalcampus.oppia.application;
 
 import java.io.File;
 
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.mobile.learningGF.R;
 import org.digitalcampus.oppia.task.SubmitQuizTask;
 import org.digitalcampus.oppia.task.SubmitTrackerMultipleTask;
 import org.grameenfoundation.cch.tasks.UpdateQuotesTask;

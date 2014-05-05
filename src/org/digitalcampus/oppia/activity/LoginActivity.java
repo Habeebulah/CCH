@@ -17,6 +17,16 @@
 
 package org.digitalcampus.oppia.activity;
 
+import java.util.ArrayList;
+
+import org.digitalcampus.mobile.learningGF.R;
+import org.digitalcampus.oppia.listener.SubmitListener;
+import org.digitalcampus.oppia.model.User;
+import org.digitalcampus.oppia.task.LoginTask;
+import org.digitalcampus.oppia.task.Payload;
+import org.digitalcampus.oppia.utils.UIUtils;
+import org.grameenfoundation.cch.activity.HomeActivity;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,17 +38,6 @@ import android.widget.EditText;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-
-import org.digitalcampus.mobile.learning.R;
-import org.digitalcampus.oppia.listener.SubmitListener;
-import org.digitalcampus.oppia.model.User;
-import org.digitalcampus.oppia.task.LoginTask;
-import org.digitalcampus.oppia.task.Payload;
-import org.digitalcampus.oppia.utils.UIUtils;
-
-import org.grameenfoundation.cch.activity.HomeActivity;
-
-import java.util.ArrayList;
 
 public class LoginActivity extends AppActivity implements SubmitListener  {
 

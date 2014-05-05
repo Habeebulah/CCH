@@ -21,13 +21,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.mobile.learningGF.R;
 import org.digitalcampus.oppia.adapter.DownloadCourseListAdapter;
 import org.digitalcampus.oppia.application.DbHelper;
 import org.digitalcampus.oppia.application.MobileLearning;
 import org.digitalcampus.oppia.listener.APIRequestListener;
-import org.digitalcampus.oppia.model.Lang;
 import org.digitalcampus.oppia.model.Course;
+import org.digitalcampus.oppia.model.Lang;
 import org.digitalcampus.oppia.model.Tag;
 import org.digitalcampus.oppia.task.APIRequestTask;
 import org.digitalcampus.oppia.task.Payload;

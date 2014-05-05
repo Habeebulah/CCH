@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Callable;
 
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.mobile.learningGF.R;
 import org.digitalcampus.oppia.adapter.ActivityPagerAdapter;
 import org.digitalcampus.oppia.adapter.SectionListAdapter;
 import org.digitalcampus.oppia.model.Activity;
@@ -36,9 +36,12 @@ import org.digitalcampus.oppia.widgets.QuizWidget;
 import org.digitalcampus.oppia.widgets.ResourceWidget;
 import org.digitalcampus.oppia.widgets.WidgetFactory;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
@@ -56,6 +59,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+@SuppressLint("NewApi")
 public class CourseActivity extends SherlockFragmentActivity implements ActionBar.TabListener, OnInitListener {
 
 	public static final String TAG = CourseActivity.class.getSimpleName();
@@ -267,6 +271,8 @@ public class CourseActivity extends SherlockFragmentActivity implements ActionBa
 		((WidgetFactory) apAdapter.getItem(currentActivityNo)).saveTracker();
 	}
 
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+	@SuppressLint("NewApi")
 	public void onInit(int status) {
 		// check for successful instantiation
 		if (status == TextToSpeech.SUCCESS) {

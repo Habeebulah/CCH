@@ -19,8 +19,7 @@ package org.digitalcampus.oppia.activity;
 
 import java.util.Locale;
 
-
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.mobile.learningGF.R;
 import org.digitalcampus.oppia.application.MobileLearning;
 import org.digitalcampus.oppia.utils.FileUtils;
 

@@ -17,7 +17,7 @@
 
 package org.digitalcampus.oppia.service;
 
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.mobile.learningGF.R;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

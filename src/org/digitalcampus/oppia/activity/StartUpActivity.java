@@ -21,7 +21,7 @@ package org.digitalcampus.oppia.activity;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.mobile.learningGF.R;
 import org.digitalcampus.oppia.application.MobileLearning;
 import org.digitalcampus.oppia.listener.InstallCourseListener;
 import org.digitalcampus.oppia.listener.PostInstallListener;
@@ -31,9 +31,7 @@ import org.digitalcampus.oppia.task.InstallDownloadedCoursesTask;
 import org.digitalcampus.oppia.task.Payload;
 import org.digitalcampus.oppia.task.PostInstallTask;
 import org.digitalcampus.oppia.task.UpgradeManagerTask;
-
 import org.grameenfoundation.cch.activity.HomeActivity;
-import com.bugsense.trace.BugSenseHandler;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -44,6 +42,8 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.TextView;
+
+import com.bugsense.trace.BugSenseHandler;
 
 public class StartUpActivity extends Activity implements UpgradeListener, PostInstallListener, InstallCourseListener{
 

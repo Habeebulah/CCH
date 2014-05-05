@@ -26,11 +26,11 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 
 import org.apache.http.client.ClientProtocolException;
-import org.digitalcampus.mobile.learning.R;
+import org.digitalcampus.mobile.learningGF.R;
 import org.digitalcampus.oppia.application.MobileLearning;
 import org.digitalcampus.oppia.listener.InstallCourseListener;
-import org.digitalcampus.oppia.model.DownloadProgress;
 import org.digitalcampus.oppia.model.Course;
+import org.digitalcampus.oppia.model.DownloadProgress;
 import org.digitalcampus.oppia.utils.HTTPConnectionUtils;
 
 import android.content.Context;
