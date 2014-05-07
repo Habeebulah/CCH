@@ -6,6 +6,8 @@ import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
+
+
 import org.digitalcampus.mobile.learningGF.R;
 import org.digitalcampus.oppia.activity.AboutActivity;
 import org.digitalcampus.oppia.activity.AppActivity;
@@ -28,11 +30,15 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract.Events;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.JavascriptInterface;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.SearchView;
@@ -45,15 +51,17 @@ import com.actionbarsherlock.view.MenuItem;
 
 
 
+
 @SuppressLint("SetJavaScriptEnabled")
 public class HomeActivity extends AppActivity implements OnSharedPreferenceChangeListener, Observer{
 
 	public static final String TAG = HomeActivity.class.getSimpleName();
 	private SharedPreferences prefs;
-	
+	final Handler myHandler = new Handler();
 	Intent myIntent;
 	private WebView myWebView;
-
+	private String location;
+	private String eventType;
 	// declare updater class member here (or in the Application)
 		@SuppressWarnings("unused")
 		private AutoUpdateApk aua;
@@ -81,12 +89,20 @@ public class HomeActivity extends AppActivity implements OnSharedPreferenceChang
 				
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        
+        final JavaScriptInterface myJavaScriptInterface
+     	= new JavaScriptInterface(this);  
 		myWebView = (WebView) findViewById(R.id.webView1);
 		myWebView.getSettings().setJavaScriptEnabled(true);
 		myWebView.addJavascriptInterface(new WebAppInterface(this), "Android");
+		myWebView.getSettings().setLightTouchEnabled(true);
+		myWebView.getSettings().setJavaScriptEnabled(true);
+		myWebView.addJavascriptInterface(myJavaScriptInterface, "AndroidFunction");
+
+
+	       
+	    //void WebView.loadUrl("javascript:xxxx");  
 		//myWebView.addJavascriptInterface(new JavascriptAccessor(), "javascriptAccessor");
-		
+		//myWebView.addJavascriptInterface(new JavascriptInterface(this), "AndroidFunction");
 		myWebView.setWebViewClient(new WebViewClient(){
 				
 				public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -113,8 +129,8 @@ public class HomeActivity extends AppActivity implements OnSharedPreferenceChang
 							    myIntent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
 							    //myIntent.putExtra("title", pickevent.getSelectedItem().toString());
 							    //myIntent.removeCategory("title");
-							    myIntent.putExtra("description", "Description of your event");
-							    myIntent.putExtra("eventLocation", "Please enter where you are ");
+							    myIntent.putExtra("description", eventType);
+							    myIntent.putExtra("eventLocation", location);
 							    myIntent.putExtra(Events.ACCESS_LEVEL, Events.ACCESS_PRIVATE);
 							    myIntent.putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY);
 							    startActivity(myIntent);	 				
@@ -138,10 +154,35 @@ public class HomeActivity extends AppActivity implements OnSharedPreferenceChang
 		
 		String url = "file:///android_asset/www/cch/index.html";
 		myWebView.loadUrl(url);
-		myWebView.loadUrl("javascript: {document.getElementsById(\"picker\")[0].value =;};");
+		//myWebView.loadUrl("javascript: {document.getElementsById(\"picker\")[0].value =;};");
 		
 	}
 
+	 public class JavaScriptInterface {
+			Context mContext;
+
+		    JavaScriptInterface(Context c) {
+		        mContext = c;
+		    }
+		    
+		    public void getString(String webMessage, String webMessage1){	    	
+		    	final String msgeToast = webMessage;	    	
+		    	 myHandler.post(new Runnable() {
+		             @Override
+		             public void run() {
+		                  //This gets executed on the UI thread so it can safely modify Views
+		                 //myTextView.setText(msgeToast);
+		             }
+		         });
+
+		       //Toast.makeText(mContext, webMessage, Toast.LENGTH_SHORT).show();
+		         location = webMessage;
+		         eventType = webMessage1;
+		        //eventType = WebMessage1;
+		    }
+		    
+		   
+	    }
 	
 	
 	
