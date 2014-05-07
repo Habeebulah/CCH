@@ -20,6 +20,7 @@ package org.digitalcampus.oppia.activity;
 import java.util.ArrayList;
 
 import org.digitalcampus.mobile.learningGF.R;
+import org.digitalcampus.oppia.application.DbHelper;
 import org.digitalcampus.oppia.listener.SubmitListener;
 import org.digitalcampus.oppia.model.User;
 import org.digitalcampus.oppia.task.LoginTask;
@@ -27,12 +28,17 @@ import org.digitalcampus.oppia.task.Payload;
 import org.digitalcampus.oppia.utils.UIUtils;
 import org.grameenfoundation.cch.activity.HomeActivity;
 
+import android.app.Application;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -42,17 +48,17 @@ import com.actionbarsherlock.view.MenuItem;
 public class LoginActivity extends AppActivity implements SubmitListener  {
 
 	public static final String TAG = LoginActivity.class.getSimpleName();
-	private SharedPreferences prefs;
-	
+	private SharedPreferences prefs;	
 	private EditText usernameField;
 	private EditText passwordField;
 	private ProgressDialog pDialog;
-	
+	DbHelper Db;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
+		Db = new DbHelper(getApplicationContext());
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		usernameField = (EditText) findViewById(R.id.login_username_field);
@@ -60,7 +66,8 @@ public class LoginActivity extends AppActivity implements SubmitListener  {
     }
 	
 	public void onLoginClick(View view){
-		String username = usernameField.getText().toString();
+		Integer staffId = Integer.valueOf(usernameField.getText().toString());
+		String username = staffId.toString();
     	//check valid email address format
     	if(username.length() == 0){
     		UIUtils.showAlert(this,R.string.error,R.string.error_no_username);
@@ -82,10 +89,25 @@ public class LoginActivity extends AppActivity implements SubmitListener  {
     	u.setPassword(password);
     	users.add(u);
     	
+
     	Payload p = new Payload(users);
+    	
+    	if (!isOnline()){
+    		if (Db.checkUserExists(u)){
+    			startActivity(new Intent(this, HomeActivity.class));
+    			finish();
+    		}
+    		else {
+    			Log.v("password", "Wrong");
+    			UIUtils.showAlert(this,R.string.error,"wrong username password combination");
+    			return;
+    		}
+    	}
+    	else{
     	LoginTask lt = new LoginTask(this);
     	lt.setLoginListener(this);
     	lt.execute(p);
+    	}
 	}
 	
 	public void onRegisterClick(View view){
@@ -136,6 +158,16 @@ public class LoginActivity extends AppActivity implements SubmitListener  {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	public boolean isOnline() {
+	    ConnectivityManager cm =
+	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
 	}
 }
 
