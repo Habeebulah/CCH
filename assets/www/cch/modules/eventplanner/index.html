@@ -13,6 +13,18 @@
     <link href="../../css/metro-bootstrap-responsive.min.css" rel="stylesheet">
     <link href="../../css/iconFont.min.css" rel="stylesheet">
     <link href="../../css/cch.css" rel="stylesheet">
+    
+      <script type="text/javascript"> 
+
+      function init() {
+         var element = document.getElementById('picker');
+         var element2 = document.getElementById('picker2');
+         alert(element.options[element.selectedIndex].text);
+         alert(element2.options[element2.selectedIndex].text);        
+        AndroidFunction.getString(element.options[element.selectedIndex].text, element2.options[element2.selectedIndex].text);
+      }
+
+    </script> 
 
   </head>
 
@@ -24,14 +36,26 @@
 
         <hr/>
         
+        <div class= "picker">
+        	<form>		
+			
+            <select id="picker"  >
+  				<option value="default">add new location</option>
+  				<option value="Legon">Legon</option>
+  				<option value="Gimpa">Gimpa</option>
+  				<option value="Medina">Medina</option>
+			</select> 
+			<select id="picker2"  >
+  				<option value="default" >add new event</option>
+  				<option>Ante Natal</option>
+  				<option >Home visits</option>
+  				<option >Frquent Check ups</option>
+			</select> 
+			</form> 
+        </div>
         <div class="toolbar transparent pull-right">
-        	<select>
-        	  <option value="antenatal">ante natat</option>
-        	  <option value="checkups">Home Checkups</option>
-        	  <option value="personalinterviews">Personal Interviews</option>
-        	  
-        	</select> 
-            <a href="addevent"><button><i class="icon-plus on-left"></i>Add Event</button></a>
+            		
+            <a href="addevent"><button onclick = "javascript: return init();" ><i class="icon-plus on-left" onclick = "javascript: return init();" ></i>Add Event</button></a>
             <a href="viewcal"><button><i class="icon-calendar on-left"></i>View Calendar</button></a>
         </div>
         <hr/>

@@ -8,6 +8,8 @@ import java.util.Observer;
 
 
 
+
+
 import org.digitalcampus.mobile.learningGF.R;
 import org.digitalcampus.oppia.activity.AboutActivity;
 import org.digitalcampus.oppia.activity.AppActivity;
@@ -52,7 +54,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 
 
-@SuppressLint("SetJavaScriptEnabled")
+@SuppressLint({ "SetJavaScriptEnabled", "JavascriptInterface" })
 public class HomeActivity extends AppActivity implements OnSharedPreferenceChangeListener, Observer{
 
 	public static final String TAG = HomeActivity.class.getSimpleName();
@@ -60,13 +62,14 @@ public class HomeActivity extends AppActivity implements OnSharedPreferenceChang
 	final Handler myHandler = new Handler();
 	Intent myIntent;
 	private WebView myWebView;
-	private String location;
-	private String eventType;
+	private String location = " ";
+	private String eventType = " ";
 	// declare updater class member here (or in the Application)
 		@SuppressWarnings("unused")
 		private AutoUpdateApk aua;
 	
-	@SuppressLint("JavascriptInterface")
+		
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,19 +93,13 @@ public class HomeActivity extends AppActivity implements OnSharedPreferenceChang
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         final JavaScriptInterface myJavaScriptInterface
-     	= new JavaScriptInterface(this);  
-		myWebView = (WebView) findViewById(R.id.webView1);
-		myWebView.getSettings().setJavaScriptEnabled(true);
-		myWebView.addJavascriptInterface(new WebAppInterface(this), "Android");
+     	= new JavaScriptInterface(this);     
+		myWebView = (WebView) findViewById(R.id.webView1);	    	 
 		myWebView.getSettings().setLightTouchEnabled(true);
 		myWebView.getSettings().setJavaScriptEnabled(true);
 		myWebView.addJavascriptInterface(myJavaScriptInterface, "AndroidFunction");
-
-
 	       
-	    //void WebView.loadUrl("javascript:xxxx");  
-		//myWebView.addJavascriptInterface(new JavascriptAccessor(), "javascriptAccessor");
-		//myWebView.addJavascriptInterface(new JavascriptInterface(this), "AndroidFunction");
+	    
 		myWebView.setWebViewClient(new WebViewClient(){
 				
 				public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -116,25 +113,25 @@ public class HomeActivity extends AppActivity implements OnSharedPreferenceChang
 								
 						} 
 						else if(url.equals("file:///android_asset/www/cch/modules/eventplanner/addevent")){
-							//String Location = myWebView.get.getElementById('picker').value;
+							
 							Log.v(TAG, "Launching addcal");
+			 				
+						    Log.d("EventType", eventType);
+						    Log.d("Location", location);
+						    
 							  Calendar cal = Calendar.getInstance(); 
 							    myIntent = new Intent(myIntent.ACTION_INSERT);
-							   	myIntent.setType("vnd.android.cursor.item/event");
-							    //myIntent.putExtra("Event type", "CCh" );
-							    
+							   	myIntent.setType("vnd.android.cursor.item/event");						    
 							    myIntent.putExtra("beginTime", cal.getTimeInMillis());
 							    myIntent.putExtra("allDay", true);	    
 							    myIntent.putExtra("rrule", "FREQ=YEARLY");
 							    myIntent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
-							    //myIntent.putExtra("title", pickevent.getSelectedItem().toString());
-							    //myIntent.removeCategory("title");
-							    myIntent.putExtra("description", eventType);
+							    myIntent.putExtra("title", eventType);
+							    myIntent.putExtra("description", "Description");
 							    myIntent.putExtra("eventLocation", location);
 							    myIntent.putExtra(Events.ACCESS_LEVEL, Events.ACCESS_PRIVATE);
 							    myIntent.putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY);
-							    startActivity(myIntent);	 				
-							
+							    startActivity(myIntent);	
 						}
 						else if (url.equals("file:///android_asset/www/cch/Learner")){							
 							Intent intent = new Intent(getApplicationContext(),ModuleLearningActivity.class);
@@ -154,35 +151,33 @@ public class HomeActivity extends AppActivity implements OnSharedPreferenceChang
 		
 		String url = "file:///android_asset/www/cch/index.html";
 		myWebView.loadUrl(url);
-		//myWebView.loadUrl("javascript: {document.getElementsById(\"picker\")[0].value =;};");
+		
 		
 	}
-
 	 public class JavaScriptInterface {
 			Context mContext;
-
+			
 		    JavaScriptInterface(Context c) {
 		        mContext = c;
+		        
 		    }
 		    
-		    public void getString(String webMessage, String webMessage1){	    	
-		    	final String msgeToast = webMessage;	    	
+		    public void getString(String webMessage, String webMessage1){	    
+		    	Toast.makeText(mContext, "Habeeb", Toast.LENGTH_SHORT).show();
+		    	 location = webMessage;
+		         eventType = webMessage1;
+			         	
 		    	 myHandler.post(new Runnable() {
 		             @Override
-		             public void run() {
-		                  //This gets executed on the UI thread so it can safely modify Views
-		                 //myTextView.setText(msgeToast);
+		             public void run() {   			        
+		                
 		             }
 		         });
-
-		       //Toast.makeText(mContext, webMessage, Toast.LENGTH_SHORT).show();
-		         location = webMessage;
-		         eventType = webMessage1;
-		        //eventType = WebMessage1;
+		    	 
 		    }
-		    
-		   
 	    }
+
+	
 	
 	
 	
